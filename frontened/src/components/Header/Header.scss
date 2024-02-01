@@ -1,0 +1,113 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 152px;
+  padding: 0 120px;
+  gap: 80px;
+
+  .app-header_links {
+    > div {
+      display: flex;
+      gap: 15px;
+
+      a {
+        color: var(--Black, #000);
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        text-decoration: none;
+        padding: 10px;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: #ddd; /* Background color on hover */
+        }
+      }
+    }
+  }
+
+  .app-header_action-buttons {
+    display: flex;
+    gap: 20px;
+
+    .signup {
+      background-color: #b55d51;
+      text-decoration: none;
+      padding: 12px 24px;
+      color: antiquewhite;
+      border-radius: 4px;
+    }
+
+    .login {
+      text-decoration: none;
+      background-color: #ebebeb;
+      border-radius: 4px;
+      color: #000;
+      padding: 12px 24px;
+    }
+  }
+
+  .hamburger-container {
+    display: none;
+
+    @media screen and (max-width: 1024px) {
+      display: block;
+      position: relative;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    padding: 0 20px;
+
+    .app-header_links {
+      display: none; // Hide the desktop navigation links
+    }
+
+    .mobile-links {
+      position: relative;
+      display: block;
+      list-style: none;
+      background-color:#fff;
+      color: #000;
+      top: 130px;
+      padding: 16px 10px;
+      left: 700px;
+      width: 30%;
+      height: 240px;
+    }
+    .sidebar {
+      // position: relative;
+      // width: 40%;
+      gap: 20px;
+      display: flex;
+      justify-content: revert-layer;
+      align-items: center;
+      flex-direction: column;
+      font-weight: 800;
+      
+    }
+    .sidebar span{
+      text-align: center;
+      // padding: 5px 5px;
+      width:100%;
+      padding-bottom: 5px;
+      border-bottom: 1px solid black;
+
+    }
+    .sidebar a {
+      text-decoration: none;
+      color: #000;
+    }
+
+    .app-header_action-buttons {
+      flex-direction: column; // Change the direction to column
+      align-items: flex-end; // Align the buttons to the right
+
+      .display {
+        display: none;
+      }
+    }
+  }
+}

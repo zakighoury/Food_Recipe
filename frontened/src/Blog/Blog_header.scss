@@ -1,0 +1,26 @@
+.Blog_header {
+  display: flex;
+  align-items: center;
+  width: 650px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.blog-link{
+    text-decoration: none;
+    color: black;
+}
+.bread-crumb{
+    padding: 20px 165px;
+    
+
+}
+.bread-crumb-span{
+    font-weight: 700;
+
+}
+.blog-subtitle{
+    font-weight: 700;
+font-size: 32px;
+    padding: 20px 165px;
+
+}

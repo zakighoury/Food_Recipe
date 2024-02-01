@@ -1,0 +1,17 @@
+.logo-with-text {
+  display: flex;
+  align-items: center;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 35px;
+  
+  .logo-with-text_perfect {
+    padding: 0;
+    color: #000;
+  }
+
+  .logo-with-text_recepie {
+    color: rgba(181, 93, 81, 0.97);
+  }
+}

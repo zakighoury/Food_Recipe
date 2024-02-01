@@ -1,0 +1,97 @@
+// Recipe-Pics.scss
+
+.flex-container {
+  display: flex;
+  justify-content: center; // Centers the card container horizontally
+  padding: 20px;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px; // Adds spacing between cards
+}
+
+.recipe-card {
+  width: 370px; // Set a fixed width for each card
+  height: 376px;
+  // line-height: 2.5;
+  // padding: 0px 16px 16px 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden; // Hides any content that overflows the card
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-image {
+  width: 100%;
+  height: 200px; // Set a fixed height for the image
+  // object-fit: cover; // Ensures the image covers the entire space without distortion
+  border-radius: 8px 8px 0 0; // Applies border radius only to the top corners
+}
+
+.recipe-details {
+  width: 100%;
+  padding: 16px 16px 16px 16px;
+}
+.ant-rate{
+  color:#c0746b;
+}
+
+.recipe-details h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+.rating{
+  padding: 10px;
+}
+.recipe-details.author-name {
+  font-size: 14px;
+  color: #555;
+  // margin-bottom: 12px;
+}
+.recipe-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 10px;
+}
+.fire {
+  color: #c0746b;
+}
+.calories {
+  border: 1px solid #c0746b;
+  padding: 12px 24px;
+  background-color: white;
+  border-radius: 8px;
+}
+.author {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 38px;
+  // border: 1px solid #c0746b;
+}
+.authorImage {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  // justify-content: space-between;
+  // padding: 10px;
+  // align-items: center;
+  // padding: 10px;
+}
+.author-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.author-name{
+ 
+}
+// .author-details{
+//   display: flex;
+//   justify-content: space-between;
+// }

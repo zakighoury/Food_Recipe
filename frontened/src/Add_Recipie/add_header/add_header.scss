@@ -1,0 +1,21 @@
+.parent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 90px;
+  .create-text {
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 35px;
+    color: #000;
+    // text-transform: uppercase;
+  }
+  .Button {
+    padding: 15px 30px;
+    background-color: #b55d51;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 8px;
+  }
+}

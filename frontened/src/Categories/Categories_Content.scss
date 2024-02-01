@@ -1,0 +1,18 @@
+.Category_Flex{
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 30px 40px;
+
+}
+.Category_Img_text{
+    width: 210px;
+    text-align: center;
+    height: 204px;
+}
+.Category_Img_text img{
+    margin-bottom: 10px;
+width: 100%;
+height: 100%;
+border-radius: 50%;
+}

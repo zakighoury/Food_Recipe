@@ -1,0 +1,148 @@
+.add-recipe {
+  .add-recipe-container {
+    max-width: 800px;
+    margin: 0 auto;
+
+    .custom-form {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      input[type="text"],
+      input[type="file"],
+      textarea,
+      button {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+
+        &:focus {
+          outline: none;
+          // border-color: #007bff;
+        }
+      }
+
+      button[type="submit"] {
+        background-color: #b55d51;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #b55d51;
+        }
+      }
+
+      .uploaded-image {
+        margin-bottom: 15px;
+
+        img {
+          max-width: 100%;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}
+.nutrition-inputs input {
+  width: 25%;
+}
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown button */
+.dropdown-toggle {
+  background-color: #f8f9fa;
+  color: #495057;
+  border: 1px solid #ced4da;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Dropdown content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Show the dropdown content on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Dropdown options */
+.dropdown-content label {
+  display: block;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* New Collection input */
+.dropdown-content input[type="text"] {
+  width: 100%;
+  padding: 8px 12px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+/* Dropdown options hover effect */
+.dropdown-content label:hover {
+  background-color: #f2f2f2;
+}
+
+/* Plus Collection text */
+.dropdown-content p {
+  display: block;
+  padding: 10px;
+  color: #b55d51;
+  cursor: pointer;
+}
+
+/* Plus Collection text hover effect */
+.dropdown-content p:hover {
+  background-color: #f2f2f2;
+}
+.dropdown {
+  position: relative;
+
+  .cuisine {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+}
+.cuisine_select {
+  width: 30%; // Adjust as needed
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+  appearance: none;
+
+  &:hover {
+    border-color: #888;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #555;
+  }
+}

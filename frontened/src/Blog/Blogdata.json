@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1,
+    "title": "React",
+    "description": "React is a JavaScript library for building user interfaces.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/800px-React-icon.svg.png",
+    "url": "https://reactjs.org/",
+    "author": "Jordan Walke"
+  },
+  {
+    
+    "id": 2,
+    "title": "Angular",
+    "description": "Angular is a TypeScript-based JavaScript framework.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/640px-Angular_full_color_logo.svg.png",
+    "url": "https://angular.io/",
+    "author": "Johannes Hoppe"
+
+  },
+  {
+
+    "id": 3,
+    "title": "Vue",
+    "description": "Vue.js is an open-source JavaScript framework.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/640px-Vue.js_Logo_2.svg.png",
+    "url": "https://vuejs.org/",
+    "author": "Evan You"
+
+  }
+
+
+  
+]
