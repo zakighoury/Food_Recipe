@@ -1,31 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useHistory hook
 import "./Signup_components.scss";
-import Signup from "./Signup.jpg";
-import Google from "./Google.png";
-import Facebook from "./facebook.png";
+import Signup from "../img_Sign/Signup.jpg";
 import { LockOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
+import axios from "axios";
 
-const LoginComponents = () => {
+const SignupComponents = () => {
+  const [loading, setLoading] = useState(false);
+  const SuccessRedirect = useNavigate(); 
+
+  const fetchdata = async (values) => {
+    try {
+      setLoading(true);
+      const response = await axios.post("http://localhost:5000/signup", values);
+
+      if (response.status === 201) {
+        console.log("Signup successful:", response.data);
+        SuccessRedirect("/login_page");
+      } else {
+        console.error("Signup failed:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+    fetchdata(values);
   };
 
   return (
     <div>
       <div className="login_parent">
         <div className="first_child">
-          <img src={Signup} alt="Login" />
-          {/* <h1>Login</h1> */}
+          <img src={Signup} alt="Signup" />
         </div>
 
         <div className="second_child">
-          <h3 className="login_title">Want to join our Family</h3>
+          <h3 className="signup_title">Want to join our Family</h3>
 
-          <div className="login_text">
+          <div className="signup_text">
             <Form
-              name="normal_login"
-              className="login-form"
+              name="normal_signup"
+              className="signup-form"
               initialValues={{
                 remember: true,
               }}
@@ -71,64 +91,62 @@ const LoginComponents = () => {
                   },
                 ]}
               >
-                <Input
+                <Input.Password
                   prefix={<LockOutlined className="site-form-item-icon" />}
-                  type="password"
                   placeholder="Password"
                 />
               </Form.Item>
 
               <Form.Item
-                name="resetPassword"
+                name="confirm"
+                dependencies={["password"]}
+                hasFeedback
                 rules={[
                   {
                     required: true,
-                    message: "Please input your Reset Password!",
+                    message: "Please confirm your password!",
                   },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("password") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error(
+                          "The two passwords that you entered do not match!"
+                        )
+                      );
+                    },
+                  }),
                 ]}
               >
-                <Input
+                <Input.Password
                   prefix={<LockOutlined className="site-form-item-icon" />}
-                  type="password"
-                  placeholder="Reset Password"
+                  placeholder="Confirm Password"
                 />
               </Form.Item>
 
               <Form.Item>
-                <Form.Item name="remember" valuePropName="checked" noStyle>
+                <Form.Item valuePropName="checked" noStyle>
                   <Checkbox>I agree to the terms & policy</Checkbox>
                 </Form.Item>
-
-                {/* <a className="login-form-forgot" href=""> */}
               </Form.Item>
 
               <Form.Item>
                 <Button
                   type="primary"
                   htmlType="submit"
-                  className="login-form-button"
+                  className="signup-form-button"
+                  loading={loading}
                 >
                   Signup
                 </Button>
-                {/* &nbsp;
-                Or <a href="">register now!</a> */}
               </Form.Item>
             </Form>
           </div>
-          <a>Or you can join with</a>
-          <div className="third_child">
-            <a className="a_google">
-              <img className="google" src={Google} alt="Login" />
-              Sign in with Google
-            </a>
-            <a className="a_google">
-              <img className="facebook" src={Facebook} alt="Login" />
-              Sign in with Facebook
-            </a>
-          </div>
           <p>
             Already have an account?{" "}
-            <a className="already" href="">
+            <a className="already" href="/login">
               Log in
             </a>
           </p>
@@ -138,4 +156,4 @@ const LoginComponents = () => {
   );
 };
 
-export default LoginComponents;
+export default SignupComponents;

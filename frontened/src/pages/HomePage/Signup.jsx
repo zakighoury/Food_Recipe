@@ -1,9 +1,9 @@
 import React from "react";
 import Headers from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import Signup_components from "../../Signup/Signup_components";
+import Signup_components from "../../Auth_User/Signup_Main/Signup_components";
 
-const Login = () => {
+const Signup = () => {
   return (
     <div>
       <Headers />
@@ -13,4 +13,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

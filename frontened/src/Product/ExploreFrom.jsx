@@ -1,4 +1,3 @@
-// ExploreForm.js
 import React, { useState } from "react";
 import axios from "axios";
 import "./Product_Form.scss";
@@ -22,7 +21,6 @@ const ExploreForm = ({ addExplore }) => {
     e.preventDefault();
 
     try {
-      // Send the data to the backend
       const response = await axios.post(
         "http://localhost:5000/api/explore",
         explore,
@@ -33,10 +31,8 @@ const ExploreForm = ({ addExplore }) => {
         }
       );
 
-      // If the request is successful, handle the response
       console.log("Explore item added successfully:", response.data);
 
-      // Clear the form fields
       setExplore({
         title: "",
         button: "",
@@ -46,11 +42,9 @@ const ExploreForm = ({ addExplore }) => {
         MiniUrl: "",
       });
 
-      // Call the parent function to update the state with the new explore item
       addExplore(response.data);
     } catch (error) {
       console.error("Error adding explore item:", error);
-      // Handle error or show error message to the user
     }
   };
 

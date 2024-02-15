@@ -1,26 +1,40 @@
-import React from 'react'
-import "./Logo.scss"
-import AppContainer from "../AppContainer/AppContainer"
-import { ReactComponent as Logo1 } from "./Logos/Nestle.svg"
-import { ReactComponent as Logo2 } from "./Logos/Apple_logo_black 1.svg"
-import { ReactComponent as Logo3 } from "./Logos/Frame.svg"
-import { ReactComponent as Logo4 } from "./Logos/Amazon_logo 2.svg"
-import { ReactComponent as Logo5 } from "./Logos/Google.svg"
-import { ReactComponent as Logo6 } from "./Logos/Walmart_logo 2.svg"
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import "./Logo.scss";
+import AppContainer from "../AppContainer/AppContainer";
 
 function Logo() {
+  const [partner, setPartner] = useState([]);
+
+  useEffect(() => {
+    const fetchLogoImages = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/partners');
+        setPartner(response.data);
+      } catch (error) {
+        console.error('Error fetching logo images:', error);
+      }
+    };
+
+    fetchLogoImages();
+  }, []);
+
   return (
     <AppContainer>
-    <div className='logo'>
-        <Logo1 />
-        <Logo2 />
-        <Logo3 />
-        <Logo4 />
-        <Logo5 />
-        <Logo6 />
-    </div>
+      <div className='logo'>
+        {partner.map((partner, index) => (
+          <div className='logo' key={index}>  
+          <img className='logo-image' src={partner.imageUrl1} alt="" />
+          <img className='logo-image' src={partner.imageUrl2} alt="" />
+          <img className='logo-image' src={partner.imageUrl3} alt="" />
+          <img className='logo-image' src={partner.imageUrl4} alt="" />
+          <img className='logo-image' src={partner.imageUrl5} alt="" />
+          <img className='logo-image' src={partner.imageUrl6} alt="" />
+          </div>
+        ))}
+      </div>
     </AppContainer>
-  )
+  );
 }
 
-export default Logo
+export default Logo;

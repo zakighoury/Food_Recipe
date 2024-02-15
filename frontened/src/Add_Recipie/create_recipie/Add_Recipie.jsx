@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 import "./Add_Recipie.scss";
 
 const Add_Recipe = () => {
@@ -37,98 +38,51 @@ const Add_Recipe = () => {
   const [imageUrl, setImageUrl] = useState(null);
   const [authorImageUrl, setAuthorImageUrl] = useState(null);
 
-  const onFinish = async () => {
-    try {
-      const recipeId = uuidv4();
-      const existingRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
-      const updatedRecipes = [
-        ...existingRecipes,
-        {
-          ...formValues,
-          authorImage: authorImageUrl,
-          image: imageUrl,
-          id: recipeId,
-        },
-      ];
-
-      const stringifiedRecipes = JSON.stringify(updatedRecipes);
-
-      localStorage.setItem("recipes", stringifiedRecipes);
-
-      console.log("Recipe saved to local storage:", updatedRecipes);
-      console.log("Form values:", formValues);
-
-      navigate("/create_Recipie", { state: { imageUrl } });
-    } catch (error) {
-      console.error("Error saving recipe:", error);
-    }
-  };
-
-  const handleUploadSuccess = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImageUrl(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
       [name]: value,
-    });
-  };
-  const handleAuthorChange = (e) => {
-    const { name, value } = e.target;
-
-    const validatedValue = value.replace(/[^a-zA-Z]/g, " ").slice(0, 15);
-
-    setFormValues({
-      ...formValues,
-      [name]: validatedValue,
-    });
+    }));
   };
 
-  const handleNutritionChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
+  const handleUploadSuccess = (event) => {
+    const file = event.target.files[0];
+    // Handle file upload success and set imageUrl
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setImageUrl(imageUrl);
+    }
+  };
+
+  const handleAuthorChange = (event) => {
+    const { name, value } = event.target;
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      [name]: value,
+    }));
+  };
+
+  const handleAuthorImageUpload = (event) => {
+    const file = event.target.files[0];
+    // Handle author image upload success and set authorImageUrl
+    if (file) {
+      const authorImageUrl = URL.createObjectURL(file);
+      setAuthorImageUrl(authorImageUrl);
+    }
+  };
+
+  const handleNutritionChange = (event) => {
+    const { name, value } = event.target;
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
       nutrition: {
-        ...formValues.nutrition,
+        ...prevFormValues.nutrition,
         [name]: value,
       },
-    });
+    }));
   };
 
-  const handleIngredientChange = (e, index) => {
-    const ingredients = [...formValues.ingredients];
-    ingredients[index] = e.target.value;
-    setFormValues({ ...formValues, ingredients });
-  };
-
-  const handleInstructionChange = (e, index) => {
-    const instructions = [...formValues.instructions];
-    instructions[index] = e.target.value;
-    setFormValues({ ...formValues, instructions });
-  };
-  const handleAuthorImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAuthorImageUrl(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
   const handleMouseEnter = () => {
     setIsOpen(true);
   };
@@ -136,31 +90,57 @@ const Add_Recipe = () => {
   const handleMouseLeave = () => {
     setIsOpen(false);
   };
-  const handleCollectionChange = (e) => {
-    const { name, value, checked } = e.target;
 
-    if (name === "collection") {
-      // For radio buttons
-      setFormValues({
-        ...formValues,
-        collection: value,
-        customCollection: checked ? "" : formValues.customCollection,
-      });
-    } else {
-      // For any other input, including text input
-      setFormValues({
-        ...formValues,
-        customCollection: value,
-      });
-    }
+  const toggleDropdown = () => {
+    setIsOpen((prevIsOpen) => !prevIsOpen);
   };
-  const toggleHeaderInput = () => {
-    setShowNewInput((prevState) => !prevState);
-  };
-  
 
   const handleNewInput = () => {
-    setShowNewInput((prevState) => !prevState);
+    setShowNewInput(true);
+  };
+
+  const toggleHeaderInput = () => {
+    setShowNewInput((prevShowNewInput) => !prevShowNewInput);
+  };
+
+  const onFinish = async (event) => {
+    event.preventDefault();
+    try {
+      const recipeId = uuidv4();
+      const recipeData = {
+        ...formValues,
+        authorImage: authorImageUrl,
+        image: imageUrl,
+        id: recipeId,
+      };
+
+      // Send recipe data to the backend API
+      const response = await axios.post(
+        "http://localhost:5000/recipe",
+        recipeData
+      );
+
+      console.log("Recipe saved to backend:", response.data);
+      console.log("Form values:", formValues);
+
+      navigate("/Recipe", { state: { imageUrl } });
+    } catch (error) {
+      console.error("Error saving recipe:", error);
+    }
+  };
+  const handleCollectionChange = (event) => {
+    const { name, value, checked, type } = event.target;
+    if (type === "checkbox") {
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        [name]: checked ? value : "",
+      }));
+    } else {
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        [name]: value,
+      }));
+    }
   };
 
   return (
@@ -378,8 +358,9 @@ const Add_Recipe = () => {
                     <input
                       type="text"
                       placeholder="New Collection"
-                      value={formValues.customCollection}
+                      value={formValues.collection}
                       onChange={handleCollectionChange}
+                      name="collection"
                     />
                   </div>
                 )}
@@ -410,7 +391,7 @@ const Add_Recipe = () => {
               </div>
             )}
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit">Add</button>
         </form>
       </div>
     </div>

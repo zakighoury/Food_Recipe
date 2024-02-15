@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "./Blog.scss"; // Import SCSS file for styling
+import "./Blog.scss"; 
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);

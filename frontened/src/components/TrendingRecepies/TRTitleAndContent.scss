@@ -35,9 +35,11 @@
   align-items: center;
   flex-wrap: wrap; /* Allow cards to wrap to the next line */
   gap: 20px; /* Add some space between cards */
-  padding: 0 100px;
+  padding: 0 120px;
 }
-
+.product-link{
+  text-decoration: none;
+}
 .card {
   width: 350px; /* Adjust card width based on the number of cards per row */
   border: 1px solid #ccc;

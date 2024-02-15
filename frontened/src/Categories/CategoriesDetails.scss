@@ -1,0 +1,29 @@
+.category-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .category-details__image {
+    width: 400px;
+    height: 400px;
+    margin-bottom: 20px;
+  }
+  .category-details__title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+  }
+  
+  .category-details__loader,
+  .category-details__error,
+  .category-details__not-found {
+    margin: 20px;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #878787;
+    text-align: center;
+  }
+  

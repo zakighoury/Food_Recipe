@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Product_Form.scss"; // Import SCSS file for styling
+import "./Product_Form.scss"; 
 
 const BlogForm = ({ addProduct }) => {
   const [blog, setBlog] = useState({
     imageUrl: "",
     title: "",
-    description: "", // Corrected spelling of 'description'
+    description: "", 
   });
 
   const handleChange = (e) => {
@@ -18,28 +18,23 @@ const BlogForm = ({ addProduct }) => {
     e.preventDefault();
 
     try {
-      // Send the data to the backend
       const response = await axios.post("http://localhost:5000/api/blog", blog, {
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      // If the request is successful, handle the response
       console.log("Product added successfully:", response.data);
 
-      // Clear the form fields
       setBlog({
         imageUrl: "",
         title: "",
         description: "",
       });
 
-      // Call the parent function to update the state with the new product
       addProduct(response.data);
     } catch (error) {
       console.error("Error adding product:", error);
-      // Handle error or show error message to the user
     }
   };
 

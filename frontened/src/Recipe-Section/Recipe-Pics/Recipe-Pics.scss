@@ -1,97 +1,66 @@
-// Recipe-Pics.scss
-
-.flex-container {
+.recipe-container {
   display: flex;
-  justify-content: center; // Centers the card container horizontally
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  padding: 20px;
+  height: auto;
+}
+:where(.css-dev-only-do-not-override-1jivavh).ant-card .ant-card-body {
+  padding: 0;
+  border-radius: 0 0 8px 8px;
+}
+.recipe-cards {
+  display: flex;
+  flex-wrap: wrap; /* Ensure the cards wrap to the next line if there's not enough space */
+  justify-content: center; /* Center the cards horizontally */
+  gap: 20px; /* Add some space between the cards */
+}
+.recipe-author{
+  display: flex;
+  justify-content: space-between;
+  // gap: 10px;
+  align-items: center;
+}
+.recipe-content{
   padding: 20px;
 }
+.recipe-calories{
+  border: 1px solid #f0f0f0;
 
-.card-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px; // Adds spacing between cards
 }
-
-.recipe-card {
-  width: 370px; // Set a fixed width for each card
-  height: 376px;
-  // line-height: 2.5;
-  // padding: 0px 16px 16px 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden; // Hides any content that overflows the card
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.recipe-image {
-  width: 100%;
-  height: 200px; // Set a fixed height for the image
-  // object-fit: cover; // Ensures the image covers the entire space without distortion
-  border-radius: 8px 8px 0 0; // Applies border radius only to the top corners
-}
-
-.recipe-details {
-  width: 100%;
-  padding: 16px 16px 16px 16px;
-}
-.ant-rate{
-  color:#c0746b;
-}
-
-.recipe-details h3 {
-  font-size: 18px;
-  margin-bottom: 8px;
-}
-.rating{
-  padding: 10px;
-}
-.recipe-details.author-name {
-  font-size: 14px;
-  color: #555;
-  // margin-bottom: 12px;
-}
-.recipe-buttons {
+.recipe-info {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 20px 10px;
-}
-.fire {
-  color: #c0746b;
-}
-.calories {
-  border: 1px solid #c0746b;
-  padding: 12px 24px;
-  background-color: white;
-  border-radius: 8px;
-}
-.author {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 38px;
-  // border: 1px solid #c0746b;
-}
-.authorImage {
-  display: flex;
   gap: 10px;
   align-items: center;
-  // justify-content: space-between;
-  // padding: 10px;
-  // align-items: center;
-  // padding: 10px;
 }
-.author-image {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+.recipe-card {
+  width: 300px; /* Set the width of the card */
+  height: 320px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow effect */
+
+  img {
+    width: 100%; /* Ensure the image fills the card horizontally */
+    height: 200px; /* Set the height of the image */
+    object-fit: cover; /* Maintain aspect ratio and cover the entire space */
+  }
+.avatar_container{
+  
 }
-.author-name{
- 
+  .ant-card-meta-title {
+    font-size: 18px; /* Set the title font size */
+    font-weight: bold; /* Make the title bold */
+    margin-bottom: 8px; /* Add some margin below the title */
+  }
+
+  .avatar_autor {
+    margin-right: 8px; /* Add some margin between the avatar and the text */
+    width: 40px;
+    height: 40px;
+  }
+
+  span {
+    font-size: 14px; /* Set the font size for the author's name */
+  }
 }
-// .author-details{
-//   display: flex;
-//   justify-content: space-between;
-// }

@@ -1,12 +1,12 @@
-// ProductModel.js
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const CategorySchema = new mongoose.Schema({
-    imageUrl: String,
-    title: String,
-    
+
+  imageUrl: String,
+  title: String,
+  
 });
 
-const Category = mongoose.model('Cat', CategorySchema);
+const Category = mongoose.model("Cat", CategorySchema);
 
 module.exports = Category;

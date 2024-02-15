@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../components/PopularCategories/PopularCategories.scss";
+import "./Categories_Content.scss";
 import axios from "axios";
 
 const Categories_Content = () => {
@@ -21,17 +21,16 @@ const Categories_Content = () => {
 
   return (
     <div>
-    
-      <div className="card-popular">
+      <div className="card-popular-page">
         {categories.map((category, index) => (
-          <div key={index} className="category-item">
+          <Link key={index} to={`/categorydetails/${category._id}`} className="category-item">
             <div className="image-container">
               <img className="image-popular" src={category.imageUrl} alt="" />
               <div className="text-overlay">
                 <p>{category.title}</p>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

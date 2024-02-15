@@ -7,7 +7,6 @@ import './StarRating.scss';
 const StarRating = ({ rating }) => {
   const stars = [];
 
-  // Render full, half, or empty stars based on the rating
   for (let i = 1; i <= 5; i++) {
     if (i <= rating) {
       stars.push(<StarIcon key={i} />);

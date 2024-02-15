@@ -13,6 +13,11 @@ import AddProduct from "./Product/ProductForm";
 import BlogPage from "./Product/BlogForm";
 import Explore from "./Product/ExploreFrom";
 import Cat from "./Product/CategoryFrom";
+import CategoryDetails from "./Categories/CategoryDetails";
+import PartnershipForm from "./Product/PartnershipForm";
+import Login_component from "./Login/Login_component";
+import Login_page from "./pages/HomePage/Login_page";
+import ProductDetails from "./components/TrendingRecepies/ProductDetails/ProductDetails";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,6 +29,10 @@ const router = createBrowserRouter([
     // element: <div>Recipe</div>
   },
   {
+path: "ProductDetails/:product_Id",
+Component: ProductDetails,
+  },
+  {
     path: "Create_Recipie",
     Component: Create_Recipe,
   },
@@ -31,6 +40,7 @@ const router = createBrowserRouter([
     path: "Signup",
     Component: Signup,
   },
+
   {
     path: "Blog",
     Component: Blog,
@@ -58,6 +68,18 @@ const router = createBrowserRouter([
   {
     path: "AddCat",
     Component: Cat,
+  },
+  {
+    path: "PartnershipForm",
+    Component: PartnershipForm,
+  },
+  {
+    path: "categorydetails/:cat_id",
+    Component: CategoryDetails,
+  },
+  {
+    path: "login_page",
+    Component: Login_page,
   },
 ]);
 function App() {

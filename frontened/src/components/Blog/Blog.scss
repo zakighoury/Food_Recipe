@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 145px;
+  padding: 0 120px;
   margin-bottom: 40px;
   margin-top: 40px;
   // height: 200px;
@@ -31,11 +31,13 @@
 }
 .blog-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 32px;
+  gap: 20px;
+  padding: 0 120px;
 }
+
 .blog-content {
   padding: 2px 18px;
 }
