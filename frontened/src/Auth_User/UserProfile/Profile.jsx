@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Menu, Dropdown, Avatar, Spin } from "antd";
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
-import profilePic from "../img_Sign/Google.png";
-import './Profile.scss'; // Import a separate CSS file for styling
+import { Link } from "react-router-dom";
+import "./Profile.scss";
 
 function Profile() {
   const [profile, setProfile] = useState(null);
@@ -55,8 +55,15 @@ function Profile() {
           <UserOutlined /> &nbsp; {profile.username}
         </Menu.Item>
       )}
-      <Menu.Item key="logout" onClick={handleLogout} className="modern-dropdown-item">
+      <Menu.Item
+        key="logout"
+        onClick={handleLogout}
+        className="modern-dropdown-item"
+      >
         <LogoutOutlined /> &nbsp; Logout
+      </Menu.Item>
+      <Menu.Item key="profile" className="modern-dropdown-item">
+        <Link to="/profile">View Profile</Link>
       </Menu.Item>
     </Menu>
   );
@@ -68,9 +75,13 @@ function Profile() {
           <Spin size="large" />
         </div>
       ) : profile ? (
-        <Dropdown overlay={menu} trigger={["click"]} className="modern-dropdown">
+        <Dropdown
+          overlay={menu}
+          trigger={["click"]}
+          className="modern-dropdown"
+        >
           <div>
-            <Avatar src={profilePic} />
+            <Avatar src={profile.imageUrl} />{" "}
           </div>
         </Dropdown>
       ) : (

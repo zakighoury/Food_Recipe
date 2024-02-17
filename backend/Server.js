@@ -11,7 +11,9 @@ const Category = require("./Product/CategoryModel");
 const Partner = require("./Product/PartnershipModel");
 const Recipe = require("./Product/RecipeModel");
 const Comment = require("./Product/comment");
-const ProductComment = require("./Product/ProductComment");
+const path = require('path');
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
 const Secretkey = "your_secret_key";
 
 const app = express();
@@ -26,37 +28,44 @@ app.use(cors());
 // Product Routes
 // Get a single product by ID
 // Example: Associating multiple comments with a single product
-// Route to save comments associated with a product
-app.get("/product/:productId/comments", async (req, res) => {
+app.get('/product/:productId', async (req, res) => {
   try {
     const productId = req.params.productId;
-    const comments = await Comment.find({ productId }).populate("userId", "name");
+    // Fetch comments associated with the productId from the database
+    const comments = await Comment.find({ productId }).populate('userId', 'username');
     res.status(200).json(comments);
   } catch (error) {
-    console.error("Error fetching comments:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error('Error fetching comments:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
 
-
-app.post("/product/:productId/comments", async (req, res) => {
+app.post('/product/:productId', async (req, res) => {
   try {
-    const { productId } = req.params;
-    const { text, userId } = req.body;
+    const { userId, username, text } = req.body;
+    const productId = req.params.productId;
 
-    // Assuming you have a User model with a name field
-    const user = await User.findById(userId);
+    // Create a new comment instance
+    const newComment = new Comment({
+      productId,
+      userId,
+      username,
+      text
+    });
 
-    const newComment = new Comment({ productId, text, userId, userName: user.name });
+    // Save the comment to the database
     const savedComment = await newComment.save();
 
+    // Return the saved comment in the response
     res.status(201).json(savedComment);
   } catch (error) {
     console.error("Error saving comment:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+
 
 
 app.get("/api/products/:id", async (req, res) => {
@@ -275,10 +284,15 @@ app.post("/login", async (req, res) => {
     // Get the user._id;
     const userid = user._id;
 
+
     // Send the token and userid in the response
-    res.json({ token, userid });
+    res.json({ token, userid, username: user.username, imageUrl: user.imageUrl });
     console.log("Token:", token);
     console.log("userid", userid);
+    console.log("User:", user.username);
+
+
+
   } catch (error) {
     console.error("Error:", error.message);
     res.status(500).json({ message: "Internal server error" });
@@ -309,12 +323,6 @@ function verifyToken(req, res, next) {
 app.get("/profile/:id", verifyToken, async (req, res) => {
   try {
     // Verify token asynchronously
-    const authData = await new Promise((resolve, reject) => {
-      jwt.verify(req.token, Secretkey, (err, decoded) => {
-        if (err) reject(err);
-        resolve(decoded);
-      });
-    });
 
     const user = await User.findById(req.params.id); // Fetch user by ID from database
     if (!user) {
@@ -331,6 +339,75 @@ app.get("/profile/:id", verifyToken, async (req, res) => {
     }
   }
 });
+
+
+
+cloudinary.config({
+  cloud_name: 'dbmrvzray',
+  api_key: '278694518371965',
+  api_secret: 'oX4R5UsWsIxfraDswVsnSTXaEkc'
+});
+
+// Define a route for uploading an image to Cloudinary
+// Multer storage for Cloudinary
+// Multer storage for Cloudinary
+// Multer configuration for local storage
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/') // Save uploaded files to the 'uploads' directory
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)) // Set filename as current timestamp + original extension
+  }
+});
+
+// Multer middleware
+const upload = multer({ storage: storage });
+
+
+
+// Define route to handle image upload
+app.post("/upload-image", upload.single("image"), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No image file provided" });
+    }
+
+    const filePath = req.file.path; // File path of the uploaded image locally
+    const CloudinaryFunctions = {
+      upload: async function (filepath) {
+        const result = await cloudinary.uploader.upload(filePath,
+          (error) => {
+            if (error) {
+              console.error(error)
+            }
+          });
+        return result
+
+      }
+
+    }
+    // Upload image to Cloudinary
+    // const result = await cloudinary.uploader.upload(filePath);
+
+    // Save image URL to MongoDB
+    const newUser = new User({ imageUrl: result.secure_url });
+    await newUser.save();
+
+    // Delete the local file after uploading to Cloudinary
+    // fs.unlinkSync(filePath); // If you want to delete the file after upload, uncomment this line
+
+    const imageUrl = result.secure_url; // URL of the uploaded image in Cloudinary
+    res.json({ imageUrl: imageUrl });
+    console.log("Image uploaded successfully:", imageUrl);
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+
 app.get("/recipe", async (req, res) => {
   try {
     const recipes = await Recipe.find();

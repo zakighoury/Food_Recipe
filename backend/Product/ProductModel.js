@@ -5,8 +5,9 @@ const productSchema = new mongoose.Schema({
     button: String,
     imageUrl: String,
     rating: Number,
-    author:String,
-    MiniUrl:String,
+    author: String,
+    MiniUrl: String,
+
 });
 
 const Product = mongoose.model('Product', productSchema);

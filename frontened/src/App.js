@@ -18,10 +18,15 @@ import PartnershipForm from "./Product/PartnershipForm";
 import Login_component from "./Login/Login_component";
 import Login_page from "./pages/HomePage/Login_page";
 import ProductDetails from "./components/TrendingRecepies/ProductDetails/ProductDetails";
+import ProfilePage from "./Auth_User/UserProfile/ProfilePage/ProfilePage";
 const router = createBrowserRouter([
   {
     path: "/",
     Component: HomePage,
+  },
+  {
+    path: "profile",
+    Component: ProfilePage,
   },
   {
     path: "Recipe",
@@ -29,8 +34,8 @@ const router = createBrowserRouter([
     // element: <div>Recipe</div>
   },
   {
-path: "ProductDetails/:product_Id",
-Component: ProductDetails,
+    path: "ProductDetails/:productId",
+    Component: ProductDetails,
   },
   {
     path: "Create_Recipie",

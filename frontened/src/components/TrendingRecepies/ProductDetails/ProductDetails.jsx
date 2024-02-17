@@ -1,104 +1,62 @@
+// ProductDetails.js
+
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+import CommentSection from "../CommentSection/CommentSection";
+import "./ProductDetails.scss";
+import StarRating from "../StarRatinng";
 
 function ProductDetails() {
+  const { productId } = useParams();
   const [product, setProduct] = useState(null);
-  const [error, setError] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const { product_Id } = useParams();
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchProductAndComments = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/products/${product_Id}`
+        // Fetch product details
+        const productResponse = await axios.get(
+          `http://localhost:5000/api/products/${productId}`
         );
-        setProduct(response.data);
+        setProduct(productResponse.data);
+
+        // Fetch comments for the product
+        const commentsResponse = await axios.get(
+          `http://localhost:5000/product/${productId}`
+        );
+        setComments(commentsResponse.data);
       } catch (error) {
-        setError(error.message);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchProduct();
-  }, [product_Id]);
-
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5000/product/${product_Id}/comments`
-        );
-        setComments(response.data);
-      } catch (error) {
-        console.error("Error fetching comments:", error);
-      }
-    };
-
-    fetchComments();
-  }, [product_Id]);
-
-  const handleCommentChange = (event) => {
-    setNewComment(event.target.value);
-  };
-
-  const handleCommentSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      await axios.post(`http://localhost:5000/product/${product_Id}/comments`, {
-        text: newComment,
-      });
-
-      setNewComment("");
-
-      // Fetch and update the comments after submission
-      const response = await axios.get(
-        `http://localhost:5000/product/${product_Id}/comments`
-      );
-      setComments(response.data);
-    } catch (error) {
-      console.error("Error saving comment:", error);
-    }
-  };
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!product) {
-    return <div>Loading...</div>;
-  }
+    fetchProductAndComments();
+  }, [productId]);
 
   return (
-    <div className="product-card">
-      <div className="product-details">
-        <h2>{product.title}</h2>
-        <p>Button: {product.button}</p>
-        <p>Rating: {product.rating}</p>
-        <p>Author: {product.author}</p>
-        <img src={product.MiniUrl} alt="" />
-      </div>
-
-      <div className="comments-section">
-        <h3>Comments:</h3>
-        <div>
-          {comments.map((comment, index) => (
-            <div key={index}>
-              <p>{comment.text}</p>
+    <div className="product-details-container">
+      {product && (
+        <div className="product-details-card">
+          <div className="product-details">
+            <img src={product.imageUrl} alt="" className="product-image" />
+            <h2 className="product-title">{product.title}</h2>
+            <p className="product-author">By: {product.author}</p>
+            <div className="product-rating">
+              <StarRating rating={product.rating} />
             </div>
-          ))}
+            <p className="product-description">{product.description}</p>
+            <img src={product.MiniUrl} className="product-mini-image" alt="" />
+          </div>
+          <div className="comment-section">
+            <CommentSection
+              currentUser={localStorage.getItem("userid")}
+              productId={productId}
+            />
+          </div>
         </div>
-      </div>
-
-      <form onSubmit={handleCommentSubmit}>
-        <label>
-          Add Comment:
-          <textarea value={newComment} onChange={handleCommentChange} />
-        </label>
-        <button type="submit">Submit Comment</button>
-      </form>
+      )}
     </div>
   );
 }
